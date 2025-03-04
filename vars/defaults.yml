@@ -1,0 +1,46 @@
+arch: amd64
+
+default_user: hobart
+default_user_name: Hobart2967
+default_user_email: hobart2967@outlook.com
+
+asdf_vm_version: 0.16.4
+asdf_vm_plugins:
+  - name: nodejs
+    packages:
+      - name: 18.20.7
+      - name: 22.5.1
+        default: true
+
+  - name: java
+    packages:
+      - name: corretto-21.0.6.7.1
+        default: true
+      - name: corretto-11.0.26.4.1
+      - name: corretto-17.0.11.9.1
+      - name: corretto-19.0.2.7.1
+
+  - name: python
+    packages:
+      - name: 3.13.1
+        default: true
+  - name: awscli
+    packages:
+      - name: 2.23.13
+        default: true
+  - name: dotnet-core
+    packages:
+    - name: 6.0.425
+      default: true
+  - name: maven
+    packages:
+    - name: 3.9.6
+      default: true
+  - name: terraform
+    packages:
+    - name: 1.11.0
+      default: true
+
+github_keys_holder: xbzljy6z5y7xiekns7p7w4cnsy
+private_key_id: ssh-privkey-wsl-home
+public_key_id: ssh-pubkey-wsl-home

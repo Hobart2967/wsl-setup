@@ -1,0 +1,19 @@
+- name: Check wether .oh-my-zsh folder exists
+  become: true
+  become_user: "{{ default_user }}"
+  stat:
+    path: $HOME/.oh-my-zsh
+  register: oh_my_zsh
+
+- name: Download asdf-vm
+  when: not oh_my_zsh.stat.exists
+  ansible.builtin.get_url:
+    url: "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
+    dest: /tmp/oh-my-zsh.install.sh
+    mode: '0755'
+
+- name: Install ohmyszh
+  become: true
+  become_user: "{{ default_user }}"
+  ansible.builtin.command: /tmp/oh-my-zsh.install.sh
+  when: not oh_my_zsh.stat.exists

@@ -1,0 +1,59 @@
+- name: Check wether .ssh folder exists
+  become: true
+  become_user: "{{ default_user }}"
+  stat:
+    path: $HOME/.ssh
+  register: ssh_dir
+
+- name: Create .ssh directory
+  become: true
+  become_user: "{{ default_user }}"
+  ansible.builtin.file:
+    path: $HOME/.ssh
+    state: directory
+    mode: '0700'
+  when: not ssh_dir.stat.exists or not ssh_dir.stat.exists
+
+- name: Check wether .ssh/id_ed25519 exists
+  become: true
+  become_user: "{{ default_user }}"
+  stat:
+    path: $HOME/.ssh/id_ed25519
+  register: ssh_private_key
+
+- name: Check wether .ssh/id_ed25519.pub exists
+  become: true
+  become_user: "{{ default_user }}"
+  stat:
+    path: $HOME/.ssh/id_ed25519.pub
+  register: ssh_public_key
+
+- name: Retrieve Private Key from 1Password
+  become: true
+  become_user: "{{ default_user }}"
+  when: not ssh_private_key.stat.exists or not ssh_public_key.stat.exists
+  ansible.builtin.command: sh -c "op item get {{github_keys_holder}} --fields "label={{private_key_id}}" --format json | jq -r '.value' > ~/.ssh/id_ed25519"
+
+- name: Fix permissions on id_ed25519
+  become: true
+  become_user: "{{ default_user }}"
+  ansible.builtin.file:
+    path: $HOME/.ssh/id_ed25519
+    state: file
+    mode: '0600'
+  when: not ssh_private_key.stat.exists or not ssh_public_key.stat.exists
+
+- name: Retrieve Public Key from 1Password
+  become: true
+  become_user: "{{ default_user }}"
+  when: not ssh_private_key.stat.exists or not ssh_public_key.stat.exists
+  ansible.builtin.command: sh -c "op item get {{github_keys_holder}} --fields "label={{public_key_id}}" --format json | jq -r '.value' > ~/.ssh/id_ed25519.pub"
+
+- name: Fix permissions on id_ed25519.pub
+  become: true
+  become_user: "{{ default_user }}"
+  ansible.builtin.file:
+    path: $HOME/.ssh/id_ed25519.pub
+    state: file
+    mode: '0644'
+  when: not ssh_private_key.stat.exists or not ssh_public_key.stat.exists

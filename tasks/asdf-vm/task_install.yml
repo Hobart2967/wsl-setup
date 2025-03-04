@@ -1,0 +1,36 @@
+---
+
+- name: Download asdf-vm
+  ansible.builtin.get_url:
+    url: "https://github.com/asdf-vm/asdf/releases/download/v{{asdf_vm_version}}/asdf-v{{asdf_vm_version}}-linux-{{arch}}.tar.gz"
+    dest: /tmp/asdf-v{{asdf_vm_version}}-linux-{{arch}}.tar.gz
+    mode: '0440'
+
+
+- name: Recursively remove directory
+  ansible.builtin.file:
+    path: /tmp/asdf
+    state: absent
+  when: asdf_version_str != "asdf version v{{asdf_vm_version}}"
+
+- name: Create extraction target directory
+  ansible.builtin.file:
+    path: /tmp/asdf
+    state: directory
+    mode: '0755'
+  when: asdf_version_str != "asdf version v{{asdf_vm_version}}"
+
+- name: Extract asdf package
+  ansible.builtin.unarchive:
+    remote_src: true
+    src: /tmp/asdf-v{{asdf_vm_version}}-linux-{{arch}}.tar.gz
+    dest: /tmp/asdf
+  when: asdf_version_str != "asdf version v{{asdf_vm_version}}"
+
+- name: Install asdf
+  ansible.builtin.copy:
+    src: /tmp/asdf/asdf
+    dest: /usr/bin/asdf
+    mode: 'a+x'
+  when: asdf_version_str != "asdf version v{{asdf_vm_version}}"
+

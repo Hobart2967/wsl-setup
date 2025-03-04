@@ -1,0 +1,11 @@
+export MACHINE_TYPE=home # or: home
+export ZSH="$HOME/.oh-my-zsh"
+
+ZSH_THEME="robbyrussell"
+
+export PERSONAL_SHELL_SETUP_PATH={{setup_path}}
+source $PERSONAL_SHELL_SETUP_PATH/_index.sh
+
+plugins=(git)
+
+source $ZSH/oh-my-zsh.sh

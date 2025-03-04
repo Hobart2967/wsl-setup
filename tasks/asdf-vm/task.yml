@@ -1,0 +1,29 @@
+---
+
+- name: "Set null version"
+  set_fact:
+    asdf_version_str: "null"
+
+- name: Check for asdf version
+  command: "asdf --version"
+  register: asdf_version_cmd
+  ignore_errors: true
+
+- name: "Store asdf version"
+  set_fact:
+    asdf_version_str: "{{ asdf_version_cmd.stdout }}"
+
+- name: Set target version comparison string
+  set_fact:
+    target_asdf_version_str: "asdf version v{{asdf_vm_version}}"
+
+- name: Install ASDF Version Manager
+  include_tasks: tasks/asdf-vm/task_install.yml
+  when: asdf_version_str != target_asdf_version_str
+
+
+- name: Install ASDF Plugins
+  include_tasks: tasks/asdf-vm/task_plugin-and-packages.yml
+  loop: "{{asdf_vm_plugins}}"
+  vars:
+    plugin: "{{ item }}"

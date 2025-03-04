@@ -1,0 +1,54 @@
+---
+# - name: Install basic packages
+#   apt:
+#     name: "{{ item }}"
+#     state: present
+#   with_items:
+#     - openssh-server
+#     - zsh
+#     - net-tools
+#     - nano
+#     - curl
+#     - git
+#     - jq
+#     - wget
+#     - htop
+#     - mc
+#     - ethtool
+#     - trash-cli
+#     - ffmpeg
+#     - make
+#     - docker-compose
+#     - make
+#     - build-essential
+#     - libssl-dev
+#     - zlib1g-dev
+#     - libbz2-dev
+#     - libreadline-dev
+#     - libsqlite3-dev
+#     - wget
+#     - curl
+#     - llvm
+#     - libncursesw5-dev
+#     - xz-utils
+#     - tk-dev
+#     - libxml2-dev
+#     - libxmlsec1-dev
+#     - libffi-dev
+#     - liblzma-dev
+
+# TODO
+#- name: Activate Git LFS
+#  ansible.builtin.command: git lfs install
+
+#- name: Install ASDF Version Manager
+#  include_tasks: tasks/asdf-vm/task.yml
+
+#- name: Install Oh My Zsh
+#  include_tasks: tasks/ohmyzsh/task.yml
+
+#- name: Install Shell Setup
+#  include_tasks: tasks/shell-setup/task.yml
+
+- name: Install Github SSH Auth
+  include_tasks: tasks/github-auth/task.yml

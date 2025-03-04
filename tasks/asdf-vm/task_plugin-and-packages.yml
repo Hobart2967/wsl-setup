@@ -1,0 +1,19 @@
+---
+
+- name: "Install ASDF plugin - {{plugin.name}}"
+  ansible.builtin.command: asdf plugin add {{plugin.name}}
+  become_user: "{{ default_user }}"
+  become: true
+
+- name: "Install ASDF plugin packages - {{plugin.name}}"
+  ansible.builtin.command: asdf install {{plugin.name}} {{ package.name }}
+  loop: "{{plugin.packages}}"
+  loop_control:
+    loop_var: "package"
+
+- name: "Set default - {{plugin.name}}"
+  ansible.builtin.command: asdf global {{plugin.name}} {{ default_package.name }}
+  when: default_package.default is defined
+  loop: "{{plugin.packages}}"
+  loop_control:
+    loop_var: "default_package"

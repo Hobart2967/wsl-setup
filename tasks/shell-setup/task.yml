@@ -1,0 +1,39 @@
+- name: Check wether source/github.com/Hobart2967/shell-setup folder exists
+  become: true
+  become_user: "{{ default_user }}"
+  stat:
+    path: $HOME/source/github.com/Hobart2967/shell-setup
+  register: shell_setup
+
+- name: Create clone target directory
+  become: true
+  become_user: "{{ default_user }}"
+  ansible.builtin.file:
+    path: $HOME/source/github.com/Hobart2967
+    state: directory
+    mode: '0755'
+  when: not shell_setup.stat.exists
+
+- name: Download shell-setup
+  when: not shell_setup.stat.exists
+  become: true
+  become_user: "{{ default_user }}"
+  ansible.builtin.command: git clone https://{{github_username}}:{{github_password}}@github.com/Hobart2967/shell-setup $HOME/source/github.com/Hobart2967/shell-setup
+
+- name: Get absolute path for shell-setup
+  become: true
+  become_user: "{{ default_user }}"
+  ansible.builtin.command: echo "$HOME/source/github.com/Hobart2967/shell-setup"
+  register: absolute_path
+
+- name: Add Template Variable to Context
+  set_fact:
+    setup_path: "{{absolute_path.stdout}}"
+
+- name: Apply zshrc
+  become: true
+  become_user: "{{ default_user }}"
+  ansible.builtin.template:
+    src: tasks/shell-setup/zshrc.j2
+    dest: $HOME/.zshrc
+

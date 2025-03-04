@@ -1,0 +1,23 @@
+---
+
+- hosts: 127.0.0.1
+  connection: local
+  become: true
+
+  vars_files:
+    - vars/defaults.yml
+
+  vars_prompt:
+    - name: github_username
+      prompt: "Enter GitHub User Name"
+      private: no
+    - name: github_password
+      prompt: "Enter Github Password"
+      private: yes
+
+  tasks:
+    - name: Execute Install
+      include_tasks: tasks/install.yml
+
+    - name: Set up user
+      include_tasks: tasks/user-setup.yml
