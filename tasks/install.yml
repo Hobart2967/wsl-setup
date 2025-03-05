@@ -12,6 +12,7 @@
     - git
     - jq
     - wget
+    - gh
     - htop
     - mc
     - ethtool
