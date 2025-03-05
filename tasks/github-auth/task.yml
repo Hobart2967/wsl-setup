@@ -57,3 +57,10 @@
     state: file
     mode: '0644'
   when: not ssh_private_key.stat.exists or not ssh_public_key.stat.exists
+
+- name: Fix origin for shell-setup
+  become: true
+  become_user: "{{ default_user }}"
+  ansible.builtin.command: git remote set-url origin git@github.com:Hobart2967/shell-setup
+  args:
+    chdir: $HOME/source/github.com/Hobart2967/shell-setup
