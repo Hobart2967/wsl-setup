@@ -41,14 +41,14 @@
 #- name: Activate Git LFS
 #  ansible.builtin.command: git lfs install
 
-#- name: Install ASDF Version Manager
-#  include_tasks: tasks/asdf-vm/task.yml
+- name: Install ASDF Version Manager
+  include_tasks: tasks/asdf-vm/task.yml
 
-#- name: Install Oh My Zsh
-#  include_tasks: tasks/ohmyzsh/task.yml
+- name: Install Oh My Zsh
+  include_tasks: tasks/ohmyzsh/task.yml
 
-#- name: Install Shell Setup
-#  include_tasks: tasks/shell-setup/task.yml
+- name: Install Shell Setup
+  include_tasks: tasks/shell-setup/task.yml
 
 - name: Install Github SSH Auth
   include_tasks: tasks/github-auth/task.yml

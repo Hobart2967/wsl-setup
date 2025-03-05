@@ -15,6 +15,8 @@ sudo apt install \
 
 ```sh
 ansible-playbook provision-machine.yml \
+  --connection=local \
+  --inventory 127.0.0.1, \
   --diff \
   --ask-become-pass
 ```
