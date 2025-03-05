@@ -50,5 +50,8 @@
 - name: Install Shell Setup
   include_tasks: tasks/shell-setup/task.yml
 
+- name: Terrastate
+  include_tasks: tasks/terrastate/task.yml
+
 - name: Install Github SSH Auth
   include_tasks: tasks/github-auth/task.yml

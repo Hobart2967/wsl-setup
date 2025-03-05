@@ -1,0 +1,23 @@
+---
+
+- name: Remove existing files
+  ansible.builtin.file:
+    path: /tmp/linux_{{arch}}_terrastate
+    state: absent
+  when: terrastate_version_str != terrastate_version
+
+- name: Download terrastate
+  ansible.builtin.get_url:
+    url: "https://github.com/janritter/terrastate/releases/download/{{terrastate_version}}/linux_{{arch}}_terrastate"
+    dest: /tmp/linux_{{arch}}_terrastate
+    mode: '0755'
+  when: terrastate_version_str != terrastate_version
+
+- name: Install terrastate
+  become: true
+  ansible.builtin.copy:
+    src: /tmp/linux_{{arch}}_terrastate
+    dest: /usr/bin/terrastate
+    mode: 'a+x'
+  when: terrastate_version_str != terrastate_version
+

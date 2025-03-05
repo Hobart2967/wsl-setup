@@ -1,0 +1,23 @@
+---
+
+- name: "Set null version"
+  set_fact:
+    terrastate_version_str: "null"
+
+- name: Check for terrastate version
+  command: |
+    sh -c 'terrastate version | head -n 1 | tr -d "\n"'
+  register: terrastate_version_cmd
+  ignore_errors: true
+
+- name: "Store terrastate version"
+  set_fact:
+    terrastate_version_str: "{{ terrastate_version_cmd.stdout | trim }}"
+
+- name: Set target version comparison string
+  set_fact:
+    target_terrastate_version_str: "Version - {{terrastate_version}}"
+
+- name: Install terrastate
+  include_tasks: tasks/terrastate/task_install.yml
+  when: terrastate_version_str != target_terrastate_version_str

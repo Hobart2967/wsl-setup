@@ -4,6 +4,8 @@ default_user: hobart
 default_user_name: Hobart2967
 default_user_email: hobart2967@outlook.com
 
+terrastate_version: 2.0.2
+
 asdf_vm_version: 0.16.5
 asdf_vm_plugins:
   - name: nodejs
