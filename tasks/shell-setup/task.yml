@@ -18,7 +18,7 @@
   when: not shell_setup.stat.exists
   become: true
   become_user: "{{ default_user }}"
-  ansible.builtin.command: git clone https://{{github_username}}:{{github_password}}@github.com/Hobart2967/shell-setup $HOME/source/github.com/Hobart2967/shell-setup
+  ansible.builtin.command: git clone https://github.com/Hobart2967/shell-setup $HOME/source/github.com/Hobart2967/shell-setup
 
 - name: Get absolute path for shell-setup
   become: true

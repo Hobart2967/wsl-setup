@@ -7,14 +7,6 @@
   vars_files:
     - vars/defaults.yml
 
-  vars_prompt:
-    - name: github_username
-      prompt: "Enter GitHub User Name"
-      private: no
-    - name: github_password
-      prompt: "Enter Github Password"
-      private: yes
-
   tasks:
     - name: Execute Install
       include_tasks: tasks/install.yml
