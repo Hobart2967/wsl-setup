@@ -20,6 +20,14 @@
   become_user: "{{ default_user }}"
   ansible.builtin.command: git clone https://github.com/Hobart2967/shell-setup $HOME/source/github.com/Hobart2967/shell-setup
 
+- name: Download shell-setup
+  when: not shell_setup.stat.exists
+  become: true
+  become_user: "{{ default_user }}"
+  ansible.builtin.command: git pull
+  args:
+    chdir: $HOME/source/github.com/Hobart2967/shell-setup
+
 - name: Get absolute path for shell-setup
   become: true
   become_user: "{{ default_user }}"
