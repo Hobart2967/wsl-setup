@@ -5,6 +5,7 @@
     state: present
   with_items:
     - openssh-server
+    - bind9-dnsutils
     - zsh
     - net-tools
     - nano
