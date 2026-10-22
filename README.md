@@ -3,11 +3,9 @@
 ## Install required tools
 
 ```sh
-sudo apt install \
-  python3 \
-  python3-pip \
-  ansible-core
-
+pkg i termux-services openssh
+sv-enable ssh-agent
+sv-enable sshd
 #python3 -m pip install --user ansible
 ```
 
