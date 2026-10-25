@@ -1,5 +1,17 @@
 # Personal WSL Setup
 
+## On Windows: Configure Git to use OpenSSH
+
+```powershell
+# This way, 1Password SSH Agent works with git.
+git config --global core.sshCommand "C:/Windows/System32/OpenSSH/ssh.exe"
+
+# Also, to make wsl communicate with windows' 1password agent
+winget install jstarks.npiperelay
+
+# Rest is configured using ansible and shell-setup
+```
+
 ## Install required tools
 
 ```sh
